@@ -1,14 +1,3 @@
-"""
-Основные маршруты проекта Django.
-
-Маршруты:
-    - "admin/": Доступ к административной панели Django.
-    - "users/": Подключает маршруты, связанные с пользователями (аутентификация, регистрация и т.д.).
-    - "habits/": Подключает маршруты для управления привычками.
-    - "swagger<format>/": Представление схемы API в формате JSON или YAML.
-    - "swagger/": Интерфейс Swagger для визуализации API документации.
-    - "redoc/": Интерфейс ReDoc для визуализации API документации.
-"""
 
 from django.contrib import admin
 from django.urls import path, include
@@ -32,9 +21,15 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("users/", include("users.urls", namespace="users")),  # Подключаем отдельные маршруты для пользователей
-    path("habits/", include("habits.urls", namespace="habits")),  # Подключаем отдельные маршруты для пользователей
-    path("swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
+    path(
+        "users/", include("users.urls", namespace="users")
+    ),  # Подключаем отдельные маршруты для пользователей
+    path(
+        "habits/", include("habits.urls", namespace="habits")
+    ),  # Подключаем отдельные маршруты для пользователей
+    path(
+        "swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"
+    ),
     path(
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),

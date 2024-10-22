@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "django_celery_beat",
     "drf_yasg",
     "corsheaders",
+
     "users",
     "habits",
 ]
@@ -121,14 +122,13 @@ SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",  # JWT авторизация
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # JWT авторизация
     ),
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticated",  # Закрываем доступ авторизацией по умолчанию
     ),
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 5,
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination", "PAGE_SIZE": 5,
 }
 
 SIMPLE_JWT = {
@@ -143,20 +143,14 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
+CELERY_BEAT_SCHEDULE = {}
 
 CELERY_BEAT_SCHEDULE = {
-    "block-inactive-users-every-day": {
-        "task": "users.tasks.block_inactive_users",
-        "schedule": crontab(hour=13, minute=30),  # Запуск каждый день в 13:30
-        "options": {
-            "expires": 3600,
-        },
-    },
-    "send-daily-reminders": {
-        "task": "habits.tasks.send_daily_reminders",
-        "schedule": crontab(hour=8, minute=0),  # Напоминания каждый день в 8 утра
-        "options": {
-            "expires": 3600,
+    'block-inactive-users-every-day': {
+        'task': 'users.tasks.block_inactive_users',
+        'schedule': crontab(hour=13, minute=30),  # Задача будет запускаться каждый день в полночь
+        'options': {
+            'expires': 3600,  # Задача истекает через час, чтобы не запускалась с опозданием
         },
     },
 }
@@ -164,9 +158,8 @@ CELERY_BEAT_SCHEDULE = {
 TELEGRAM_URL = "http://api.telegram.org/bot"
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
-
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",  # Замените на адрес вашего фронтенд-сервера
+    'http://localhost:8000',  # Замените на адрес вашего фронтенд-сервера
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False
