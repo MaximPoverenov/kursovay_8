@@ -134,7 +134,7 @@ class HabitAPITestCase(APITestCase):
             "time": "09:00",
             "action": "Running",
             "is_pleasant": False,
-            "periodicity": 6,  # Ошибка: периодичность меньше 7
+            "periodicity": 8,  # Ошибка: периодичность меньше 7
             "execution_time": 130,  # Ошибка: время выполнения больше 120 секунд
             "is_public": False,
         }

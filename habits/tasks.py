@@ -36,7 +36,7 @@ def send_daily_reminders():
     habits = Habit.objects.filter(time__lte=current_time, is_public=True)
 
     for habit in habits:
-        chat_id = habit.user.profile.telegram_id  # Предполагаем, что у пользователя есть профиль с chat_id
+        chat_id = habit.user.telegram_id  # Предполагаем, что у пользователя есть профиль с chat_id
         send_telegram_message.delay(habit.id, chat_id)
 
     return f"Напоминания отправлены для {habits.count()} привычек."

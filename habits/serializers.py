@@ -78,7 +78,7 @@ class HabitSerializer(serializers.ModelSerializer):
         Returns:
             int: Валидное значение периодичности.
         """
-        if value < 7:
+        if not 1 <= value <= 7:
             raise serializers.ValidationError("Привычку нельзя выполнять реже, чем раз в 7 дней.")
         return value
 

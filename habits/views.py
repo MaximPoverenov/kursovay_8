@@ -129,7 +129,7 @@ class ReminderViewSet(viewsets.ViewSet):
             Response: Ответ с подтверждением отправки напоминания.
         """
         habit = Habit.objects.get(id=habit_id, user=request.user)
-        chat_id = request.user.profile.telegram_id  # предполагается, что есть поле в профиле
+        chat_id = request.user.telegram_id  # предполагается, что есть поле в профиле
         send_telegram_message.delay(habit_id, chat_id)
         return Response({"status": "Напоминание отправлено!"})
 
